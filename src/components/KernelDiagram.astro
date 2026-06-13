@@ -1,0 +1,519 @@
+---
+const hardware = [
+  { label: "Cloud", icon: "cloud" },
+  { label: "Files", icon: "filetree" },
+  { label: "3rd Party API", icon: "graphql" },
+  { label: "Database", icon: "database" },
+];
+---
+
+<section class="card panel" id="overview">
+  <header class="panel-head">
+    <div class="head-block">
+      <span class="head-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6">
+          <rect x="4" y="4" width="16" height="16" rx="2"></rect>
+          <path d="M9 9h6v6H9z M12 1v3 M12 20v3 M1 12h3 M20 12h3"></path>
+        </svg>
+      </span>
+      <div>
+        <h2 class="head-title">The Kernel: The Heart of Your Business</h2>
+        <p class="head-sub">
+          The kernel is the core program that contains all business-associated processes
+          and logic.
+        </p>
+      </div>
+    </div>
+    <div class="head-block">
+      <span class="head-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M12 2v3 M12 19v3 M2 12h3 M19 12h3 M5 5l2 2 M17 17l2 2 M19 5l-2 2 M7 17l-2 2"></path>
+        </svg>
+      </span>
+      <div>
+        <h3 class="head-title small">Managing Resources</h3>
+        <p class="head-sub">
+          Kernels present a easy-to-use interface that encompasses many different types of 
+          resources, e.g. APIs, Cloud servers, databases, etc. 
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <h3 class="diagram-heading">Kernel Architecture Overview</h3>
+
+  <div class="diagram">
+    <!-- User space band -->
+    <div class="band">
+      <span class="band-label">App Space</span>
+      <div class="band-body">
+        <div class="chip-row">
+          <span class="chip">AI Agent</span>
+          <span class="chip">MCP</span>
+          <span class="chip chip-dim">Desktop</span>
+        </div>
+        <div class="syscall-bar">
+          <span>System Commands</span>
+        </div>
+        <p class="flow-note mono">
+          Apps invokes a <em>System Command</em>
+        </p>
+      </div>
+    </div>
+
+    <div class="connector"><span></span></div>
+
+    <!-- System call interface -->
+    <div class="grad-bar">System Process Start</div>
+
+    <div class="connector"><span></span></div>
+
+    <!-- System processes -->
+    <div class="layer-card">
+      <span class="layer-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6">
+          <path d="M4 7h16 M4 12h16 M4 17h10"></path>
+        </svg>
+      </span>
+      <div>
+        <strong>System Processes</strong>
+        <span>Functions that make use of System Interfaces to complete business-related tasks.</span>
+      </div>
+    </div>
+
+    <div class="connector"><span></span></div>
+
+    <!-- System interfaces -->
+    <div class="grad-bar">Call System Interfaces</div>
+        <div class="connector"><span></span></div>
+
+    <div class="layer-card">
+      <span class="layer-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6">
+          <path d="M4 7h16 M4 12h16 M4 17h10"></path>
+        </svg>
+      </span>
+      <div>
+        <strong>System Interfaces</strong>
+        <span>System Interfaces are connections to the outside world. They connect your kernel to resouces that
+          will be needed to complete business-related tasks.</span>
+      </div>
+    </div>
+
+    <div class="connector triple">
+      <span></span><span></span><span></span>
+    </div>
+
+    <!-- Kernel space modules -->
+    <!-- <div class="band kernel-band">
+      <span class="band-label">Kernel Space</span>
+      <div class="module-grid">
+        <div class="module">
+          <span class="module-tag mono">fs</span>
+          <strong>File System<br />Module</strong>
+        </div>
+        <div class="module module-glow">
+          <span class="module-tag mono">vm</span>
+          <strong>Virtual Memory<br />Module</strong>
+          <div class="heatmap" aria-hidden="true"></div>
+        </div>
+        <div class="module">
+          <span class="module-tag mono">io</span>
+          <strong>I/O Manager &amp;<br />Device Drivers</strong>
+        </div>
+      </div>
+    </div> -->
+  </div>
+
+  <!-- Hardware row -->
+  <div class="hardware">
+    <span class="band-label vertical">Resources</span>
+    <div class="hw-row">
+      {
+        hardware.map((h) => (
+          <div class="hw-node">
+            <span class="hw-icon" aria-hidden="true">
+              {h.icon === "cloud" && (
+                <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M7.5 10.5a3 3 0 0 1-.4-5.98 4.2 4.2 0 0 1 8.05-1A2.85 2.85 0 0 1 16 10.5Z" />
+                  <rect x="4" y="14" width="16" height="3.4" rx="0.8" />
+                  <rect x="4" y="18.4" width="16" height="3.4" rx="0.8" />
+                  <circle cx="7" cy="15.7" r="0.5" fill="currentColor" />
+                  <circle cx="7" cy="20.1" r="0.5" fill="currentColor" />
+                </svg>
+              )}
+              {h.icon === "filetree" && (
+                <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 4h6l1.5 2H21v4H3Z" />
+                  <path d="M7 13v6 M7 16h5 M7 19h5" />
+                  <rect x="12" y="14.5" width="8" height="3" rx="0.6" />
+                  <rect x="12" y="17.5" width="8" height="3" rx="0.6" />
+                </svg>
+              )}
+              {h.icon === "graphql" && (
+                <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round">
+                  <path d="M12 3 19.79 7.5 19.79 16.5 12 21 4.21 16.5 4.21 7.5Z" />
+                  <path d="M12 3 4.21 16.5 M12 3 19.79 16.5 M4.21 7.5 19.79 16.5 M19.79 7.5 4.21 16.5 M4.21 7.5 12 21 M19.79 7.5 12 21" stroke-width="1" />
+                  <circle cx="12" cy="3" r="1.7" fill="var(--surface-1)" />
+                  <circle cx="19.79" cy="7.5" r="1.7" fill="var(--surface-1)" />
+                  <circle cx="19.79" cy="16.5" r="1.7" fill="var(--surface-1)" />
+                  <circle cx="12" cy="21" r="1.7" fill="var(--surface-1)" />
+                  <circle cx="4.21" cy="16.5" r="1.7" fill="var(--surface-1)" />
+                  <circle cx="4.21" cy="7.5" r="1.7" fill="var(--surface-1)" />
+                </svg>
+              )}
+              {h.icon === "database" && (
+                <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                  <ellipse cx="12" cy="5" rx="8" ry="3" />
+                  <path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5" />
+                  <path d="M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6" />
+                </svg>
+              )}
+            </span>
+            <span class="hw-label">{h.label}</span>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .panel {
+    padding: 28px;
+  }
+
+  .panel-head {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--border-soft);
+  }
+
+  .head-block {
+    display: flex;
+    gap: 14px;
+  }
+
+  .head-icon {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    border-radius: var(--radius-sm);
+    color: var(--accent-cyan);
+    background: rgba(45, 212, 191, 0.08);
+    border: 1px solid rgba(45, 212, 191, 0.2);
+  }
+
+  .head-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .head-title.small {
+    font-size: 0.95rem;
+  }
+
+  .head-sub {
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: var(--text-muted);
+  }
+
+  .diagram-heading {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 24px 0 18px;
+  }
+
+  /* ---- Diagram ---- */
+  .diagram {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .band {
+    position: relative;
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-md);
+    padding: 18px 18px 18px 40px;
+    background: rgba(8, 13, 24, 0.5);
+  }
+
+  .band-label {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%) rotate(180deg);
+    writing-mode: vertical-rl;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+
+  .band-body {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .chip-row {
+    display: flex;
+    gap: 12px;
+  }
+
+  .chip {
+    flex: 1;
+    text-align: center;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 10px;
+    border-radius: var(--radius-sm);
+    background: var(--surface-3);
+    border: 1px solid var(--border-strong);
+    color: var(--text-secondary);
+  }
+
+  .chip-dim {
+    color: var(--text-muted);
+    letter-spacing: 0.2em;
+  }
+
+  .syscall-bar {
+    text-align: center;
+    font-size: 0.84rem;
+    font-weight: 600;
+    padding: 11px;
+    border-radius: var(--radius-sm);
+    background: var(--grad-bar-soft);
+    border: 1px solid var(--border-strong);
+    color: var(--text-primary);
+  }
+
+  .flow-note {
+    text-align: center;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+  }
+
+  .flow-note em {
+    color: var(--accent-cyan);
+    font-style: normal;
+  }
+
+  .grad-bar {
+    text-align: center;
+    font-size: 0.92rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 16px;
+    border-radius: var(--radius-md);
+    color: #fff;
+    background: var(--grad-bar);
+    box-shadow: 0 8px 26px -14px rgba(124, 58, 237, 0.7),
+      inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  }
+
+  .layer-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+    border-radius: var(--radius-md);
+    background: rgba(14, 22, 38, 0.7);
+    border: 1px solid var(--border-soft);
+  }
+
+  .layer-icon {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border-radius: var(--radius-sm);
+    color: var(--accent-blue);
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.25);
+  }
+
+  .layer-card strong {
+    display: block;
+    font-size: 0.92rem;
+  }
+
+  .layer-card span {
+    font-size: 0.78rem;
+    color: var(--text-muted);
+  }
+
+  /* connectors */
+  .connector {
+    display: flex;
+    justify-content: center;
+    gap: 120px;
+    height: 22px;
+  }
+
+  .connector > span {
+    width: 1px;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      var(--accent-cyan),
+      transparent
+    );
+    position: relative;
+  }
+
+  .connector > span::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--accent-cyan);
+    transform: translateX(-50%);
+    box-shadow: 0 0 8px var(--accent-cyan);
+    animation: flow 2.4s linear infinite;
+  }
+
+  @keyframes flow {
+    0% {
+      top: 0;
+      opacity: 0;
+    }
+    20% {
+      opacity: 1;
+    }
+    80% {
+      opacity: 1;
+    }
+    100% {
+      top: 18px;
+      opacity: 0;
+    }
+  }
+
+  .module-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  .module {
+    position: relative;
+    overflow: hidden;
+    padding: 20px 16px;
+    border-radius: var(--radius-md);
+    background: linear-gradient(180deg, rgba(16, 25, 42, 0.9), rgba(10, 16, 28, 0.9));
+    border: 1px solid var(--border-strong);
+    text-align: center;
+  }
+
+  .module strong {
+    font-size: 0.86rem;
+    font-weight: 700;
+    line-height: 1.35;
+    color: var(--text-primary);
+  }
+
+  .module-tag {
+    display: inline-block;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent-cyan);
+    margin-bottom: 10px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: rgba(45, 212, 191, 0.1);
+    border: 1px solid rgba(45, 212, 191, 0.25);
+  }
+
+  .module-glow {
+    border-color: rgba(99, 102, 241, 0.45);
+    box-shadow: 0 0 30px -10px rgba(99, 102, 241, 0.5);
+  }
+
+  .heatmap {
+    position: absolute;
+    inset: auto 12px 12px auto;
+    width: 56px;
+    height: 30px;
+    border-radius: 6px;
+    background:
+      radial-gradient(circle at 20% 60%, #f97316 0 18%, transparent 40%),
+      radial-gradient(circle at 60% 30%, #22d3ee 0 16%, transparent 38%),
+      radial-gradient(circle at 80% 70%, #a855f7 0 16%, transparent 40%),
+      linear-gradient(120deg, #1e3a8a, #0e7490);
+    opacity: 0.85;
+    filter: blur(1px);
+  }
+
+  /* ---- Hardware ---- */
+  .hardware {
+    position: relative;
+    margin-top: 18px;
+    padding: 22px 18px 22px 40px;
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-md);
+    background: rgba(8, 13, 24, 0.5);
+  }
+
+  .band-label.vertical {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+  }
+
+  .hw-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+
+  .hw-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 14px;
+    border-radius: var(--radius-sm);
+    transition: background 0.18s ease;
+  }
+
+  .hw-node:hover {
+    background: rgba(118, 146, 198, 0.05);
+  }
+
+  .hw-icon {
+    color: var(--accent-cyan);
+    filter: drop-shadow(0 0 10px rgba(45, 212, 191, 0.35));
+  }
+
+  .hw-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+  }
+
+  @media (max-width: 720px) {
+    .panel-head {
+      grid-template-columns: 1fr;
+    }
+    .module-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

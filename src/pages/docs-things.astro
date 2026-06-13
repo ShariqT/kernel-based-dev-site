@@ -1,0 +1,73 @@
+---
+import Doc from "../layouts/Doc.astro";
+const sections = [
+  { id: "tips", label: "Tips and Bits" }
+];
+---
+
+<Doc>
+    <main class="ui container doc-main">
+        <div class="ui stackable grid">
+          <!-- Side navigation -->
+          <div class="four wide column">
+            <div class="ui vertical pointing fluid menu doc-nav">
+              {sections.map((s) => <a class="item" href={`#${s.id}`}>{s.label}</a>)}
+            </div>
+          </div>
+
+          <!-- Content -->
+          <div class="twelve wide column">
+              <h1 class="ui header">
+                Helpful Tips
+                <div class="sub header">
+                  This is a technical deep dive to explain the code behind the
+                  kernel, the conventions, and proper usage of the kernel.
+                </div>
+              </h1>
+
+              <h2 class="ui dividing header" id="tips">
+                  Tips about System Interfaces
+              </h2>
+              <p>
+                System Interfaces should use environment variables when getting information to connect to 
+                external sources. System Interface can either have a descriptive and specific 
+                function name, i.e. get_all_current_customers, or a more generalized interface, 
+                i.e. make_post_request and make_get_request.
+              </p>
+
+              <h2 class="ui dividing header" id="tips">
+                  Tips about System Commands
+              </h2>
+              <p>
+                System Command enum labels should be descriptive. Be sure that System Commands are not 
+                delivery platform dependent. System Commands should be customers/client dependent. This is 
+                normal in business and lets consumers know that the underlying System Process that is 
+                called is vendored for a particular customer or type of customer. 
+              </p>
+
+              <h2 class="ui dividing header" id="tips">
+                  Tips about Errors and Exception handling
+              </h2>
+              <p>
+                System Interface methods are only supposed to return a value or raise an exception. 
+                System Processes catch raised exceptions and return an Exit class instance with 
+                ExitCode.ERROR and any number of arbitrary keyword arguments for the instance's `data` attribute. 
+              </p>
+
+
+              <h2 class="ui dividing header" id="tips">
+                  Tips about Logging and Observability
+              </h2>
+              <p>
+                Since the kernel contains the most business critical aspects of a company, it is important to have logging enabled for the kernel. At the bare minimum, you will want to capture the System Command invoked, which delivery platform invoked it, and the user that invoked it. You will also want to capture the ExitCode returned from a System Process. If the System Process returns an error, you will also want to capture the relevant exception/error information. A more detailed logging system should exist in the delivery platform itself. Those metrics will be needed to plan the roadmap of what to build next. 
+
+              </p>
+
+
+
+
+
+          </div>
+        </div>
+    </main>
+</Doc>

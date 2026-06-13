@@ -1,0 +1,52 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Hero from "../components/Hero.astro";
+import KernelDiagram from "../components/KernelDiagram.astro";
+import ProcessScheduler from "../components/ProcessScheduler.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<Layout>
+  <div id="top"></div>
+  <Header />
+  <main class="container">
+    <Hero />
+    <div class="layout-grid">
+      <div class="main-col">
+        <KernelDiagram />
+      </div>
+      <aside class="side-col">
+        <ProcessScheduler />
+      </aside>
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .layout-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.85fr) minmax(300px, 1fr);
+    gap: 22px;
+    align-items: start;
+    padding-bottom: 40px;
+  }
+
+  .side-col {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    position: sticky;
+    top: 84px;
+  }
+
+  @media (max-width: 1024px) {
+    .layout-grid {
+      grid-template-columns: 1fr;
+    }
+    .side-col {
+      position: static;
+    }
+  }
+</style>

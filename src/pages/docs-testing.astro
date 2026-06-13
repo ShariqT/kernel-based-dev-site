@@ -1,0 +1,64 @@
+---
+import Doc from '../layouts/Doc.astro'
+const sections = [
+  { id: "tips", label: "Testing Tips" }
+];
+---
+
+<Doc>
+    <main class="ui container doc-main">
+        <div class="ui stackable grid">
+          <!-- Side navigation -->
+          <div class="four wide column">
+            <div class="ui vertical pointing fluid menu doc-nav">
+              {sections.map((s) => <a class="item" href={`#${s.id}`}>{s.label}</a>)}
+            </div>
+          </div>
+          <!-- Content -->
+          <div class="twelve wide column">
+              <h1 class="ui header">
+                Notes on testing the kernel
+                <div class="sub header">
+                  This section is for learning how to test your kernel.
+                </div>
+              </h1>
+              <h2 class="ui dividing header" id="tips">
+                  Testing System Processes
+              </h2>
+              <p>
+                System processes should be easy to test. The loose coupling means that 
+                you can use mocks and spies to simulate real data returned from interfaces. 
+                There is an important distinction to make regarding tests; they can 
+                either be business process tests or engineering tests. It is highly 
+                recommended that business process tests are handwritten. Business 
+                process tests are the results of hours of meetings and communication 
+                with other teams in the organization about how to best represent 
+                a particular business practice in code. If you are leveraging AI 
+                to write pieces of the kernel, you will want to make sure that 
+                the model knows not to touch these files. It is recommended that 
+                you allow the AI to create engineering tests - these are everything 
+                else that needs to be tested, i.e. that no records found in the 
+                database throws an exception. 
+
+
+              </p>
+
+              <h2 class="ui dividing header" id="tips">
+                  Testing System Interfaces
+              </h2>
+              <p>
+                Because System Interfaces can connect to a variety of different sources, there 
+                are no clear cut guidelines to follow. Sometimes, you may need to standup an embedded
+                database to check that records are being stored and retreived. Sometimes, you may need
+                to mock HTTP responses. Othertimes, you may need to integrate a third-party SDK.
+              </p>
+              <p>
+                The best tip that I can give is to make sure to catch errors/exceptions thrown by
+                the data source and bubble those up to the System Process that calls the interface
+                in error codes that are native to your kernel. You don't want to bubble up errors or
+                exceptions directly from the data source that the System Interface is wrapping. 
+              </p>
+          </div>
+        </div>
+    </main>
+</Doc>

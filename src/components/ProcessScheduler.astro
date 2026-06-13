@@ -1,0 +1,238 @@
+---
+const procs = ["P1", "P2", "P3", "P4"];
+---
+
+<section class="card sched" id="process">
+  <header class="sched-head">
+            <h2 class="head-title">Introduction</h2>
+
+    <!-- <h3 class="card-title">Process Scheduler</h3> -->
+    <!-- <div class="sched-tabs">
+      <button class="tab active">Animation</button>
+      <button class="tab">Algorithm</button>
+      <div class="select">
+        <span>Round Robin</span>
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="m6 9 6 6 6-6"></path>
+        </svg>
+      </div>
+    </div> -->
+  </header>
+
+  <div class="sched-body">
+    <p>
+      In the early 2000s, there was an idea that broke through the ranks of web developers. The idea was responsive design, and it came about because of the proliferation of mobile phones. Now, your website could be seen from a phone, a desktop, or a tablet. The solution was to separate the structure and the presentation. 
+    </p>
+    <p>
+      Right now, we are experiencing a similar proliferation due to the rise of AI. You can now have many ways to deliver your business to users – via MCP server, AI agent, website, mobile app, desktop app, social media bot, or  REST API. Likewise, the solution to this problem is the same – separate the business logic from the delivery platform. 
+    </p>
+    <p>
+      <strong>Kernel-based development is a workflow and code design tool that neatly encapsulates a business or app’s core functions such that it can be tested and consumed on any number of delivery platforms.
+</strong>
+    </p>
+
+    
+  </div>
+</section>
+
+<style>
+  .sched {
+    padding: 18px;
+  }
+
+  .sched p{
+    padding-bottom: 30px;
+  }
+
+  .sched-head {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border-soft);
+  }
+
+
+  .sched-tabs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .tab {
+    background: transparent;
+    border: none;
+    font-size: 0.74rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    padding: 6px 4px;
+    border-bottom: 2px solid transparent;
+  }
+
+  .tab.active {
+    color: var(--text-primary);
+    border-color: var(--accent-indigo);
+  }
+
+  .select {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    padding: 6px 10px;
+    border-radius: var(--radius-sm);
+    background: var(--surface-3);
+    border: 1px solid var(--border-strong);
+  }
+
+  .sched-body {
+    padding-top: 16px;
+  }
+
+  .col-labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+
+  .sched-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr 1fr;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .queue {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .proc {
+    text-align: center;
+    font-size: 0.76rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    padding: 8px 0;
+    border-radius: 6px;
+    color: var(--text-primary);
+    background: linear-gradient(180deg, rgba(45, 212, 191, 0.14), rgba(59, 130, 246, 0.12));
+    border: 1px solid rgba(45, 212, 191, 0.3);
+    animation: pulse 3s ease-in-out infinite;
+    animation-delay: calc(var(--i) * 0.4s);
+  }
+
+  .proc.dim {
+    background: linear-gradient(180deg, rgba(124, 58, 237, 0.14), rgba(99, 102, 241, 0.1));
+    border-color: rgba(124, 58, 237, 0.3);
+    color: var(--text-secondary);
+  }
+
+  @keyframes pulse {
+    0%, 100% {
+      transform: translateY(0);
+      box-shadow: 0 0 0 rgba(45, 212, 191, 0);
+    }
+    50% {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px -6px rgba(45, 212, 191, 0.5);
+    }
+  }
+
+  .cpu-wrap {
+    position: relative;
+    display: grid;
+    place-items: center;
+    height: 100%;
+  }
+
+  .cpu {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 54px;
+    height: 54px;
+    border-radius: var(--radius-sm);
+    font-size: 0.72rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    color: #fff;
+    background: linear-gradient(180deg, rgba(99, 102, 241, 0.3), rgba(59, 130, 246, 0.2));
+    border: 1px solid rgba(99, 102, 241, 0.55);
+    box-shadow: 0 0 26px -6px rgba(99, 102, 241, 0.7);
+  }
+
+  .links {
+    position: absolute;
+    top: 0;
+    left: -6px;
+    width: 60%;
+    height: 100%;
+    fill: none;
+    stroke: rgba(45, 212, 191, 0.45);
+    stroke-width: 1.4;
+  }
+
+  .links.right {
+    left: auto;
+    right: -6px;
+    stroke: rgba(124, 58, 237, 0.45);
+  }
+
+  .links path {
+    stroke-dasharray: 4 5;
+    animation: dash 1.2s linear infinite;
+  }
+
+  @keyframes dash {
+    to {
+      stroke-dashoffset: -18;
+    }
+  }
+
+  .timeline {
+    margin-top: 18px;
+  }
+
+  .timeline-label {
+    display: block;
+    text-align: center;
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+
+  .track {
+    position: relative;
+    height: 4px;
+    border-radius: 999px;
+    background: var(--surface-3);
+  }
+
+  .track-fill {
+    position: absolute;
+    inset: 0 55% 0 0;
+    border-radius: 999px;
+    background: var(--grad-bar);
+  }
+
+  .track-thumb {
+    position: absolute;
+    left: 45%;
+    top: 50%;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #fff;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 10px rgba(99, 102, 241, 0.8);
+  }
+</style>

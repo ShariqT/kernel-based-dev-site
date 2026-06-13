@@ -1,0 +1,136 @@
+---
+import Doc from "../layouts/Doc.astro";
+
+const sections = [
+  { id: "purpose", label: "Overall Purpose" },
+  { id: "parts", label: "Parts of the Kernel" },
+  { id: "conventions", label: "Convention over Configuration" },
+  { id: "flow", label: "Kernel Flow" },
+];
+
+const parts = [
+  {
+    name: "System Commands",
+    body: "System Commands are usually an enum with a descriptive label.",
+  },
+  {
+    name: "System Processes",
+    body: "System Processes are the workhorses of the kernel. This function takes in a map of labels to System Interfaces and an arbitrary number of keyword arguments. For certain languages, this value can be an associative map.",
+  },
+  {
+    name: "System Interfaces",
+    body: "System Interfaces are facades that speak to external sources. External sources can be a database, a cloud storage, an API server, or a file system.",
+  },
+  {
+    name: "Exit",
+    body: "The Exit class is what is returned from System Processes. This class has a `code` attribute, which is an enum with the labels, GOOD or ERROR. This class also has a `data` attribute, which has an associative map or an object. EVERY Exit class will have a “msg” key in the `data` attribute.",
+  },
+];
+
+const folderTree = `+-- src
+|   +-- kerneltest
+|   |   +-- implementations (system interfaces go here)
+|   |   |   +-- __init__.py
+|   |   +-- processes (system processes go here)
+|   |   |   +-- __init__.py
+|   |   +-- __init__.py (Python-specific; bootstraps the kernel)
+|   |   +-- kernel.py (Kernel data structures and classes)
++-- tests
+|   +-- __init__.py
++-- specs (Spec and AI workplans are placed here)
++-- pyproject.toml
++-- .gitignore
++-- .python-version
++-- README.md`;
+---
+
+<Doc>
+  
+
+  <main class="ui container doc-main">
+    <div class="ui stackable grid">
+      <!-- Side navigation -->
+      <div class="four wide column">
+        <div class="ui vertical pointing fluid menu doc-nav">
+          {sections.map((s) => <a class="item" href={`#${s.id}`}>{s.label}</a>)}
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="twelve wide column">
+        <h1 class="ui header">
+          Engineering Docs
+          <div class="sub header">
+            This is a technical deep dive to explain the code behind the
+            kernel, the conventions, and proper usage of the kernel.
+          </div>
+        </h1>
+
+        <h2 class="ui dividing header" id="purpose">
+          Overall purpose of the kernel
+        </h2>
+        <p>
+          The kernel presents a facade for product resources to consume. In
+          this context, a product could be a customer/client facing
+          application (desktop, mobile app, web app), an internal application
+          (async process worker, data ingestion process), or an internal
+          business operation app.
+        </p>
+
+        <h2 class="ui dividing header" id="parts">Parts of the kernel</h2>
+        <div class="ui two stackable cards">
+          {
+            parts.map((part) => (
+              <div class="card">
+                <div class="content">
+                  <div class="header">{part.name}</div>
+                  <div class="description">{part.body}</div>
+                </div>
+              </div>
+            ))
+          }
+        </div>
+
+        <h2 class="ui dividing header" id="conventions">
+          Convention over configuration
+        </h2>
+        <div class="ui one column stackable grid">
+          <div class="column">
+            <p>
+              This saying was popularized by Ruby on Rails and in the age of
+              AI coding, this is much needed. The less decisions that the AI
+              model has to make, the better the output. The folder structure
+              of a kernel is clearly labeled. Here is an example Python kernel
+              folder structure:
+            </p>
+          </div>
+          <div class="column">
+            <div class="ui secondary segment">
+              <pre class="folder-tree">{folderTree}</pre>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="ui dividing header" id="flow">Kernel Flow</h2>
+        <p>
+          The entrypoint for a kernel is the cmd function. This function takes
+          a System Command – which is usually an enum – and an arbitrary
+          number of keyword parameters. Internally, the kernel keeps an
+          associative map of System Commands to System Processes. System
+          Processes are then called with the corresponding keyword arguments
+          that were passed in the `cmd` function.
+        </p>
+        <div class="ui info message">
+          <div class="header">Exit codes</div>
+          <p>
+            System Processes will always return an instance of Exit class. If
+            there are any exceptions raised during the execution of a System
+            Process, the Exit class will return an ERROR code.
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+</Doc>
+
+

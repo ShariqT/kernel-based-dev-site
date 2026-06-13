@@ -1,0 +1,131 @@
+:root {
+  /* Surfaces */
+  --bg-base: #060912;
+  --bg-deep: #04060d;
+  --surface-1: #0b1120;
+  --surface-2: #0e1626;
+  --surface-3: #121d31;
+  --surface-glass: rgba(15, 23, 42, 0.55);
+
+  /* Borders */
+  --border-soft: rgba(118, 146, 198, 0.14);
+  --border-strong: rgba(118, 146, 198, 0.28);
+
+  /* Text */
+  --text-primary: #e7edf8;
+  --text-secondary: #aab6cf;
+  --text-muted: #6c7a96;
+
+  /* Accents */
+  --accent-cyan: #2dd4bf;
+  --accent-blue: #3b82f6;
+  --accent-indigo: #6366f1;
+  --accent-purple: #a855f7;
+  --accent-teal: #22d3ee;
+
+  /* Gradients */
+  --grad-bar: linear-gradient(90deg, #0e7490 0%, #2563eb 48%, #7c3aed 100%);
+  --grad-bar-soft: linear-gradient(90deg, rgba(13, 148, 136, 0.22), rgba(37, 99, 235, 0.22), rgba(124, 58, 237, 0.22));
+  --grad-title: linear-gradient(90deg, #38bdf8 0%, #6366f1 55%, #a855f7 100%);
+  --grad-glow: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.16), transparent 70%);
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+
+  --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 18px 40px -24px rgba(0, 0, 0, 0.9);
+
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", ui-monospace, "Cascadia Code", monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  background-color: var(--bg-base);
+  background-image:
+    var(--grad-glow),
+    radial-gradient(ellipse 80% 50% at 100% 30%, rgba(34, 211, 238, 0.06), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 0% 60%, rgba(99, 102, 241, 0.05), transparent 60%);
+  background-attachment: fixed;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Decorative circuit grid overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(118, 146, 198, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(118, 146, 198, 0.035) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, #000 30%, transparent 80%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+::selection {
+  background: rgba(99, 102, 241, 0.4);
+  color: #fff;
+}
+
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Reusable card */
+.card {
+  background: linear-gradient(180deg, var(--surface-2), var(--surface-1));
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+.card-title {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+.gradient-text {
+  background: var(--grad-title);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}

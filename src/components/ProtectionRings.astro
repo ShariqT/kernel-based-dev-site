@@ -1,0 +1,561 @@
+---
+const userModeTraits = [
+  "Limited Hardware Access",
+  "Only Non-Privileged Instructions",
+  "Untrusted Code (User Applications)",
+  "Least Privileged",
+];
+
+const benefits = [
+  {
+    label: "Memory Protection",
+    body:
+      "User applications (Ring 1) cannot access memory assigned to other processes or the kernel.",
+  },
+  {
+    label: "Stability",
+    body:
+      "An application crash in Ring 1 remains isolated and doesn't bring down the whole system.",
+  },
+  {
+    label: "Security",
+    body:
+      "Critical kernel data structures are protected from unauthorized modification, and malicious apps are contained.",
+  },
+];
+
+const hardware = [
+  { label: "CPU", icon: "cpu" },
+  { label: "Physical Memory", icon: "memory" },
+  { label: "Disk", icon: "disk" },
+  { label: "I/O Devices", icon: "io" },
+];
+---
+
+<section class="card panel" id="architecture">
+  <h2 class="model-title">
+    <span class="gradient-text">Two-Level</span>
+    <span>OS Protection Ring Model</span>
+  </h2>
+
+  <!-- ===== Top region: privilege levels + rings + user mode ===== -->
+  <div class="top-grid">
+    <!-- Left: explanatory copy -->
+    <div class="copy-col">
+      <h3 class="block-title">System Privilege Levels</h3>
+      <p>
+        Protection rings form a concentric model of privilege levels, a
+        hardware-enforced mechanism critical for OS security and stability. This
+        model strictly controls the access to critical system code and
+        resources, preventing unauthorized access or accidental damage from
+        user-level processes.
+      </p>
+      <p>
+        By organizing the system into distinct levels of trust, the CPU can
+        enforce access controls.
+      </p>
+      <p>
+        In a streamlined two-level architecture, this model maximizes efficiency
+        while providing essential security barriers.
+      </p>
+      <p class="muted">Only two levels of privilege are utilized.</p>
+    </div>
+
+    <!-- Center: concentric rings -->
+    <div class="rings-col">
+      <div class="rings">
+        <div class="ring ring-outer">
+          <span class="ring-app-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 3H7a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V7Z" />
+              <path d="M14 3v4h4 M9 12h6 M9 15h6 M9 9h2" />
+            </svg>
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="12" r="3.2" />
+              <path d="M12 2v3 M12 19v3 M2 12h3 M19 12h3 M5 5l2 2 M17 17l2 2 M19 5l-2 2 M7 17l-2 2" />
+            </svg>
+          </span>
+
+          <div class="ring ring-inner">
+            <span class="kernel-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="9" />
+                <path d="M12 4v3 M12 17v3 M4 12h3 M17 12h3 M6.3 6.3l2.1 2.1 M15.6 15.6l2.1 2.1 M17.7 6.3l-2.1 2.1 M8.4 15.6l-2.1 2.1" />
+                <text x="12" y="14.5" text-anchor="middle" font-size="7" font-weight="700" fill="currentColor" stroke="none">K</text>
+              </svg>
+            </span>
+            <h4 class="ring-name ring-name-kernel">Ring 0: Kernel Mode</h4>
+            <ul class="ring-list">
+              <li>Full Hardware Access</li>
+              <li>Privileged Instructions Allowed</li>
+              <li>Trusted Code (OS Kernel)</li>
+              <li>Most Privileged</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- System call gateway -->
+      <div class="gateway">
+        <div class="gw-row gw-down">
+          <span class="lock" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6">
+              <rect x="5" y="11" width="14" height="9" rx="2" />
+              <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+            </svg>
+          </span>
+          <div class="gw-bar gw-bar-grad">
+            <strong>System Call Gateway</strong>
+            <span class="mono">(e.g., `sys_write`)</span>
+          </div>
+          <span class="gw-arrow" aria-hidden="true">›</span>
+        </div>
+        <div class="gw-row gw-up">
+          <span class="gw-arrow gw-arrow-back" aria-hidden="true">‹</span>
+          <div class="gw-bar gw-bar-soft">
+            <strong>Return to User Mode</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Ring 1 user mode -->
+    <div class="usermode-col">
+      <h3 class="ring-name ring-name-user">Ring 1: User Mode</h3>
+      <ul class="trait-list">
+        {userModeTraits.map((t) => <li>{t}</li>)}
+      </ul>
+    </div>
+  </div>
+
+  <!-- ===== Bottom region: transition / hardware / benefits ===== -->
+  <div class="bottom-grid">
+    <div class="copy-col">
+      <h3 class="block-title">Transition and Interaction</h3>
+      <p>
+        User-mode programs cannot perform privileged tasks, such as direct I/O
+        or modifying memory maps. When an application needs kernel services, it
+        must make a System Call.
+      </p>
+    </div>
+
+    <div class="interrupt-col">
+      <div class="hardware">
+        <span class="hw-heading">Hardware Resources</span>
+        <div class="hw-row">
+          {
+            hardware.map((h) => (
+              <div class="hw-node">
+                <span class="hw-icon" aria-hidden="true">
+                  {h.icon === "cpu" && (
+                    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round">
+                      <rect x="7" y="7" width="10" height="10" rx="1.5" />
+                      <rect x="9.5" y="9.5" width="5" height="5" rx="0.6" />
+                      <path d="M10 7V4 M14 7V4 M10 20v-3 M14 20v-3 M7 10H4 M7 14H4 M20 10h-3 M20 14h-3" />
+                    </svg>
+                  )}
+                  {h.icon === "memory" && (
+                    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round">
+                      <rect x="3" y="8" width="18" height="9" rx="1.5" />
+                      <path d="M7 8V5 M11 8V5 M15 8V5 M7 17v2 M11 17v2 M15 17v2 M6 11v3 M9 11v3 M12 11v3 M15 11v3 M18 11v3" />
+                    </svg>
+                  )}
+                  {h.icon === "disk" && (
+                    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round">
+                      <rect x="3" y="6" width="18" height="5" rx="1.5" />
+                      <rect x="3" y="13" width="18" height="5" rx="1.5" />
+                      <circle cx="7" cy="8.5" r="0.6" fill="currentColor" />
+                      <circle cx="7" cy="15.5" r="0.6" fill="currentColor" />
+                    </svg>
+                  )}
+                  {h.icon === "io" && (
+                    <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round">
+                      <rect x="3" y="5" width="18" height="12" rx="1.5" />
+                      <path d="M8 21h8 M12 17v4" />
+                      <path d="M8 9l-2 2 2 2 M16 9l2 2-2 2" />
+                    </svg>
+                  )}
+                </span>
+                <span class="hw-label">{h.label}</span>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+      <p class="interrupt-note">
+        This call causes a software interrupt, triggering a controlled hardware
+        transition from Ring 1 to Ring 0. The kernel validates the request and
+        performs the operation with full privileges, then returns control.
+        Faulty Ring 1 code cannot access Ring 0 directly, preventing a crash
+        from spreading.
+      </p>
+    </div>
+
+    <div class="benefits-col">
+      <h3 class="block-title">Summary of Benefits</h3>
+      <ul class="benefit-list">
+        {
+          benefits.map((b) => (
+            <li>
+              <strong>{b.label}:</strong> {b.body}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .panel {
+    padding: 32px;
+  }
+
+  .model-title {
+    text-align: center;
+    font-size: clamp(1.6rem, 3.6vw, 2.4rem);
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+
+  /* ---- Top grid ---- */
+  .top-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(360px, 1.2fr) minmax(0, 1fr);
+    gap: 24px;
+    align-items: center;
+    padding-bottom: 28px;
+    border-bottom: 1px solid var(--border-soft);
+  }
+
+  .copy-col p {
+    font-size: 0.82rem;
+    line-height: 1.55;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+  }
+
+  .copy-col p.muted {
+    color: var(--text-muted);
+  }
+
+  .block-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  /* ---- Concentric rings ---- */
+  .rings-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 22px;
+  }
+
+  .rings {
+    display: grid;
+    place-items: center;
+    padding: 8px;
+  }
+
+  .ring {
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    position: relative;
+  }
+
+  .ring-outer {
+    width: 340px;
+    height: 340px;
+    border: 2px solid rgba(56, 189, 248, 0.55);
+    background: radial-gradient(
+      circle at 50% 40%,
+      rgba(59, 130, 246, 0.16),
+      rgba(8, 13, 24, 0.2) 70%
+    );
+    box-shadow: 0 0 40px -6px rgba(56, 189, 248, 0.45),
+      inset 0 0 40px -10px rgba(56, 189, 248, 0.4);
+  }
+
+  .ring-app-icon {
+    position: absolute;
+    top: 26px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    color: var(--text-secondary);
+  }
+
+  .ring-inner {
+    width: 230px;
+    height: 230px;
+    border: 2px solid rgba(45, 212, 191, 0.65);
+    background: radial-gradient(
+      circle at 50% 45%,
+      rgba(16, 25, 42, 0.92),
+      rgba(8, 13, 24, 0.95)
+    );
+    box-shadow: 0 0 34px -6px rgba(45, 212, 191, 0.5),
+      inset 0 0 26px -8px rgba(45, 212, 191, 0.45);
+    text-align: center;
+    padding: 0 18px;
+  }
+
+  .kernel-icon {
+    color: var(--accent-cyan);
+    filter: drop-shadow(0 0 10px rgba(45, 212, 191, 0.5));
+    margin-bottom: 6px;
+  }
+
+  .ring-name {
+    font-size: 0.98rem;
+    font-weight: 700;
+  }
+
+  .ring-name-kernel {
+    color: var(--accent-teal);
+    margin-bottom: 8px;
+  }
+
+  .ring-list {
+    list-style: none;
+    font-size: 0.68rem;
+    line-height: 1.5;
+    color: var(--text-secondary);
+  }
+
+  /* ---- Gateway ---- */
+  .gateway {
+    width: 100%;
+    max-width: 360px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .gw-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .gw-bar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 9px 12px;
+    border-radius: var(--radius-sm);
+    line-height: 1.3;
+  }
+
+  .gw-bar strong {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .gw-bar .mono {
+    font-size: 0.64rem;
+    color: var(--text-secondary);
+  }
+
+  .gw-bar-grad {
+    background: linear-gradient(
+      90deg,
+      rgba(37, 99, 235, 0.32),
+      rgba(124, 58, 237, 0.32)
+    );
+    border: 1px solid var(--border-strong);
+  }
+
+  .gw-bar-soft {
+    background: rgba(14, 22, 38, 0.7);
+    border: 1px solid var(--border-soft);
+  }
+
+  .lock {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    border-radius: var(--radius-sm);
+    color: var(--accent-blue);
+    background: rgba(59, 130, 246, 0.12);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+  }
+
+  .gw-arrow {
+    font-size: 1.4rem;
+    line-height: 1;
+    font-weight: 700;
+    color: var(--accent-blue);
+  }
+
+  .gw-arrow-back {
+    color: var(--accent-cyan);
+  }
+
+  /* ---- User mode column ---- */
+  .ring-name-user {
+    color: var(--accent-blue);
+    margin-bottom: 14px;
+  }
+
+  .trait-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .trait-list li {
+    position: relative;
+    padding-left: 16px;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+  }
+
+  .trait-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent-blue);
+  }
+
+  /* ---- Bottom grid ---- */
+  .bottom-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: 24px;
+    padding-top: 28px;
+  }
+
+  .interrupt-col {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .hardware {
+    position: relative;
+    padding: 16px 14px 14px;
+    border: 1px solid var(--border-soft);
+    border-radius: var(--radius-md);
+    background: rgba(8, 13, 24, 0.5);
+  }
+
+  .hw-heading {
+    display: block;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+
+  .hw-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+  }
+
+  .hw-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 4px;
+    border-radius: var(--radius-sm);
+    transition: background 0.18s ease;
+  }
+
+  .hw-node:hover {
+    background: rgba(118, 146, 198, 0.05);
+  }
+
+  .hw-icon {
+    color: var(--accent-cyan);
+    filter: drop-shadow(0 0 8px rgba(45, 212, 191, 0.3));
+  }
+
+  .hw-label {
+    font-size: 0.68rem;
+    font-weight: 600;
+    text-align: center;
+    color: var(--text-secondary);
+  }
+
+  .interrupt-note {
+    font-size: 0.78rem;
+    line-height: 1.55;
+    color: var(--text-secondary);
+  }
+
+  /* ---- Benefits ---- */
+  .benefit-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .benefit-list li {
+    position: relative;
+    padding-left: 16px;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: var(--text-secondary);
+  }
+
+  .benefit-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--accent-purple);
+  }
+
+  .benefit-list strong {
+    color: var(--text-primary);
+    font-weight: 700;
+  }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 1024px) {
+    .top-grid,
+    .bottom-grid {
+      grid-template-columns: 1fr;
+    }
+    .usermode-col,
+    .copy-col {
+      max-width: 560px;
+    }
+  }
+
+  @media (max-width: 420px) {
+    .ring-outer {
+      width: 290px;
+      height: 290px;
+    }
+    .ring-inner {
+      width: 200px;
+      height: 200px;
+    }
+  }
+</style>

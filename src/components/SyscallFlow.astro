@@ -1,0 +1,88 @@
+---
+const steps = [
+  { n: 1, label: "Syscall", call: "trap → kernel mode" },
+  { n: 2, label: "Data movement", call: "sys_open()" },
+  { n: 3, label: "Data movement", call: "sys_read()" },
+  { n: 4, label: "Data movement", call: "sys_write()" },
+  { n: 5, label: "Data movement", call: "sys_close()" },
+  { n: 6, label: "Return", call: "→ user space" },
+];
+---
+
+<section class="card flow" id="io">
+  <h3 class="card-title">System Call Execution Flow</h3>
+  <ol class="flow-list">
+    {
+      steps.map((s) => (
+        <li class="flow-item">
+          <span class="flow-num">{s.n}</span>
+          <span class="flow-label">{s.label}</span>
+          <svg class="flow-arrow" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 12h14 M13 6l6 6-6 6" />
+          </svg>
+          <code class="flow-call mono">{s.call}</code>
+        </li>
+      ))
+    }
+  </ol>
+</section>
+
+<style>
+  .flow {
+    padding: 18px;
+  }
+
+  .flow-list {
+    list-style: none;
+    margin-top: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .flow-item {
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 6px;
+    border-radius: var(--radius-sm);
+    transition: background 0.16s ease;
+  }
+
+  .flow-item:hover {
+    background: rgba(118, 146, 198, 0.05);
+  }
+
+  .flow-num {
+    display: grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--accent-cyan);
+    background: rgba(45, 212, 191, 0.1);
+    border: 1px solid rgba(45, 212, 191, 0.3);
+  }
+
+  .flow-label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+  }
+
+  .flow-arrow {
+    color: var(--text-muted);
+  }
+
+  .flow-call {
+    font-size: 0.74rem;
+    color: var(--accent-blue);
+    padding: 2px 8px;
+    border-radius: 6px;
+    background: rgba(59, 130, 246, 0.08);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    white-space: nowrap;
+  }
+</style>
