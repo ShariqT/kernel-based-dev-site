@@ -1,12 +1,12 @@
 ---
 const navItems = [
   { label: "Overview", href: "/", active: false },
-  { label: "Learn", href: "/proc4", active: false },
+  { label: "Learn", href: "/learn", active: false },
   { label: "Engineering Deep Dive", href: "/docs", active: false }
 ];
-const { pathname } = Astro.url; 
+const { href} = Astro.props; 
 for (const val of navItems){
-  if (pathname === val.href) {
+  if (href === val.href) {
     val.active = true
   }
 }

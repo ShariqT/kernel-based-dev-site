@@ -1,0 +1,32 @@
+---
+const menuItems = [
+  {label: 'Engineerig Overview', active: false, href: '/docs'},
+  {label: 'Helpful Tips', active: false, href: '/docs-things'},
+  {label: 'Testing', active: false, href: '/docs-testing'}
+
+]
+
+const { href } = Astro.props; 
+for (const val of menuItems){
+  if (href === val.href) {
+    val.active = true
+  }
+}
+---
+
+<div class="ui large stackable inverted menu">
+    <div class="ui container">
+      <div class="header item">Kernel Engineering Docs</div>
+      {
+        menuItems.map((item) => (
+          <a class:list={["item", { active: item.active }]} href={item.href}>
+            {item.label}
+          </a>
+        ))
+      }
+      
+      <div class="right menu">
+        <a class="item" href="/">Kernel Development</a>
+      </div>
+    </div>
+  </div>
